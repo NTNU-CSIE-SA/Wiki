@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  outline:
+    image: node:18-alpine
+    container_name: outline
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./outline:/app
+    working_dir: /app
+    command: yarn start
+    env_file:
+      - .env
+    depends_on:
+      - db
+    networks:
+      - wiki-network
+
+  gpt:
+    image: python:3.11-slim
+    container_name: gpt
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./gpt:/app
+    working_dir: /app/api
+    command: python app.py
+    env_file:
+      - .env
+    networks:
+      - wiki-network
+
+  db:
+    image: postgres:16-alpine
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: outline
+      POSTGRES_DB: outline
+      POSTGRES_USER: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - wiki-network
+
+networks:
+  wiki-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

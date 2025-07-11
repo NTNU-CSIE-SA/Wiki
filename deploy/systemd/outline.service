@@ -1,0 +1,14 @@
+[Unit]
+Description=Outline Wiki Service
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/home/cbc/Documents/Projects/Wiki/outline
+ExecStart=/usr/bin/yarn start
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
