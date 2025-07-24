@@ -1,3 +1,0 @@
-- 要用yarn執行，記得把.env的環境變數導出 export $(grep -v '^#' .env | xargs)
-- 開postgres
-- 開redis
