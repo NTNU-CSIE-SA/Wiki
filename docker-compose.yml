@@ -9,6 +9,8 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
     volumes:
       - ./data/db:/var/lib/postgresql/data
+    networks:
+      - wikijs
 
   wiki:
     image: ghcr.io/requarks/wiki:2.5
